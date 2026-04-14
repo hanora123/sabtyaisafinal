@@ -1,0 +1,74 @@
+openapi: 3.0.3
+info:
+  title: Alhanora POS API
+  version: 1.0.0
+  description: Starter API contract for POS + Inventory + Accounting.
+servers:
+  - url: http://localhost:3000/v1
+    description: Local
+security:
+  - bearerAuth: []
+paths:
+  /auth/login:
+    post:
+      tags: [Auth]
+      summary: Login user
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      responses:
+        '200':
+          description: Login success
+  /products:
+    get:
+      tags: [Products]
+      summary: List products
+      responses:
+        '200':
+          description: Product list
+    post:
+      tags: [Products]
+      summary: Create product
+      responses:
+        '201':
+          description: Product created
+  /inventory/transfers:
+    post:
+      tags: [Inventory]
+      summary: Transfer stock between inventories
+      responses:
+        '201':
+          description: Transfer completed
+  /pos/checkout:
+    post:
+      tags: [POS]
+      summary: Complete checkout and create sale
+      responses:
+        '201':
+          description: Sale created
+  /reports/profit-loss:
+    get:
+      tags: [Reports]
+      summary: Profit and loss report
+      responses:
+        '200':
+          description: Report data
+components:
+  securitySchemes:
+    bearerAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+  schemas:
+    LoginRequest:
+      type: object
+      required: [username, password]
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
