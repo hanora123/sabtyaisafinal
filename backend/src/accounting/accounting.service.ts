@@ -447,7 +447,7 @@ export class AccountingService {
 
     const payments = await this.prisma.supplierPayment.findMany({
       where: { supplierId },
-      orderBy: { createdAt: 'asc' },
+      orderBy: { paidAt: 'asc' },
     });
 
     // دمج وترتيب العمليات
@@ -460,7 +460,7 @@ export class AccountingService {
         impact: 'DEBT', // تزيد المديونية
       })),
       ...payments.map((p) => ({
-        date: p.createdAt,
+        date: p.paidAt,
         type: 'PAYMENT',
         reference: p.referenceNo || 'سداد نقدي',
         amount: Number(p.amount),
@@ -486,19 +486,19 @@ export class AccountingService {
 
     const payments = await this.prisma.customerPayment.findMany({
       where: { customerId },
-      orderBy: { createdAt: 'asc' },
+      orderBy: { paidAt: 'asc' },
     });
 
     const statement = [
       ...sales.map((s) => ({
         date: s.createdAt,
         type: 'SALE',
-        reference: s.invoiceNumber,
+        reference: s.saleNumber,
         amount: Number(s.grandTotal),
         impact: 'DEBT', // العميل مدين لنا
       })),
       ...payments.map((p) => ({
-        date: p.createdAt,
+        date: p.paidAt,
         type: 'PAYMENT',
         reference: p.referenceNo || 'تحصيل نقدي',
         amount: Number(p.amount),

@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:3000/v1';
+const BASE_URL = 'http://127.0.0.1:4000/v1';
 
 async function setup() {
   console.log('--- Starting System Setup ---');
