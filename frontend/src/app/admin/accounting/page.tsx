@@ -22,6 +22,8 @@ export default function AccountingReportsPage() {
       if (activeReport === "trial") endpoint = "trial-balance";
       else if (activeReport === "pnl") endpoint = `income-statement?startDate=${startDate}&endDate=${endDate}`;
       else if (activeReport === "balance") endpoint = `balance-sheet?date=${endDate}`;
+      else if (activeReport === "journals") endpoint = `journals?startDate=${startDate}&endDate=${endDate}`;
+      else if (activeReport === "vat") endpoint = `vat-report?startDate=${startDate}&endDate=${endDate}`;
 
       const resp = await fetch(`${apiBase}/v1/accounting/${endpoint}`, {
         credentials: "include",
@@ -86,11 +88,17 @@ export default function AccountingReportsPage() {
         >
           القيود اليومية
         </button>
+        <button 
+          onClick={() => setActiveReport("vat")}
+          style={{ padding: "10px 20px", borderRadius: 10, cursor: "pointer", background: activeReport === "vat" ? "var(--brand-blue)" : "var(--surface)", color: activeReport === "vat" ? "#fff" : "inherit" }}
+        >
+          تقرير القيمة المضافة
+        </button>
       </div>
 
-      {(activeReport === "pnl" || activeReport === "balance" || activeReport === "journals") && (
+      {(activeReport === "pnl" || activeReport === "balance" || activeReport === "journals" || activeReport === "vat") && (
         <div style={{ display: "flex", gap: 10, marginBottom: 20, alignItems: "center", background: "var(--surface-2)", padding: 15, borderRadius: 12 }}>
-          {(activeReport === "pnl" || activeReport === "journals") && (
+          {(activeReport === "pnl" || activeReport === "journals" || activeReport === "vat") && (
             <>
               <label>من: </label>
               <input type="date" value={startDate} onChange={(e) => setStartDate(e.target.value)} style={{ padding: 8, borderRadius: 8, border: "1px solid var(--border)" }} />
@@ -202,12 +210,7 @@ export default function AccountingReportsPage() {
                       <span>{formatCur(e.amount)}</span>
                     </div>
                   ))}
-                  <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 800, padding: "10px 0", borderTop: "1px solid var(--border)", marginTop: 10 }}>
-                    <span>إجمالي حقوق الملكية</span>
-                    <span>{formatCur(data.totalEquity)}</span>
-                  </div>
-
-                  <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 900, padding: "15px 0", borderTop: "2px solid var(--border)", marginTop: 20, background: "var(--surface-2)" }}>
+                  <div style={{ display: "flex", justifyContent: "space-between", fontWeight: 800, padding: "10px 0", borderTop: "2px solid var(--border)", marginTop: 10 }}>
                     <span>إجمالي الخصوم وحقوق الملكية</span>
                     <span>{formatCur(data.totalLiabilitiesAndEquity)}</span>
                   </div>
@@ -218,19 +221,19 @@ export default function AccountingReportsPage() {
             {activeReport === "journals" && (
               <div style={{ display: "grid", gap: 20 }}>
                 {data.map((entry: any) => (
-                  <div key={entry.id} style={{ border: "1px solid var(--border)", borderRadius: 10, padding: 15 }}>
-                    <div style={{ display: "flex", justifyContent: "space-between", marginBottom: 10, borderBottom: "1px solid var(--border)", paddingBottom: 5 }}>
-                      <span style={{ fontWeight: 800 }}>رقم القيد: {entry.entryNumber}</span>
-                      <span>التاريخ: {new Date(entry.entryDate).toLocaleDateString("ar-SA")}</span>
+                  <div key={entry.id} style={{ border: "1px solid var(--border)", borderRadius: 10, overflow: "hidden" }}>
+                    <div style={{ background: "var(--surface-2)", padding: 12, display: "flex", justifyContent: "space-between", fontWeight: 700 }}>
+                      <span>{entry.entryNumber} ({entry.sourceType})</span>
+                      <span>{new Date(entry.entryDate).toLocaleDateString("ar-SA")}</span>
                     </div>
-                    <div style={{ marginBottom: 10 }}>الوصف: {entry.description || "بدون وصف"}</div>
-                    <table style={{ width: "100%", borderCollapse: "collapse" }}>
+                    <div style={{ padding: 12, fontSize: 13, color: "#666" }}>{entry.description}</div>
+                    <table style={{ width: "100%", borderCollapse: "collapse", fontSize: 13 }}>
                       <thead>
-                        <tr style={{ textAlign: "right", background: "var(--surface-2)" }}>
+                        <tr style={{ background: "var(--surface-2)", textAlign: "right" }}>
                           <th style={{ padding: 8 }}>الحساب</th>
                           <th style={{ padding: 8 }}>مدين</th>
                           <th style={{ padding: 8 }}>دائن</th>
-                          <th style={{ padding: 8 }}>ملاحظات</th>
+                          <th style={{ padding: 8 }}>ملاحظة</th>
                         </tr>
                       </thead>
                       <tbody>
@@ -248,13 +251,9 @@ export default function AccountingReportsPage() {
                 ))}
               </div>
             )}
-          </>
-        )}
-      </div>
-    </div>
-  );
-}
-, margin: "0 auto" }}>
+
+            {activeReport === "vat" && (
+              <div style={{ maxWidth: 500, margin: "0 auto" }}>
                 <h3 style={{ textAlign: "center", marginBottom: 30 }}>ملخص ضريبة القيمة المضافة</h3>
                 <div style={{ display: "grid", gap: 16 }}>
                   <div style={{ display: "flex", justifyContent: "space-between", padding: 15, background: "var(--surface-2)", borderRadius: 10 }}>
