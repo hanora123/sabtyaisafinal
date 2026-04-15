@@ -30,7 +30,7 @@ export class AuthService {
     );
     return {
       httpOnly: true,
-      sameSite: 'lax' as const,
+      sameSite: isProd ? ('none' as const) : ('lax' as const),
       secure: isProd,
       path: '/',
       maxAge: maxAgeSeconds * 1000,
