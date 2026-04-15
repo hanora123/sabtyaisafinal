@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function StatementsPage() {
   const router = useRouter();
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
+  const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
   const [type, setType] = useState<"supplier" | "customer">("supplier");
   const [list, setList] = useState<any[]>([]);

@@ -13,7 +13,7 @@ type Customer = {
 
 export default function CustomersAdminPage() {
   const router = useRouter();
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
+  const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
   const [customers, setCustomers] = useState<Customer[]>([]);
   const [isLoading, setIsLoading] = useState(true);

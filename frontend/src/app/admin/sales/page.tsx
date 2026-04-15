@@ -16,7 +16,7 @@ type Sale = {
 
 export default function SalesPage() {
   const router = useRouter();
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
+  const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
   const [sales, setSales] = useState<Sale[]>([]);
   const [isLoading, setIsLoading] = useState(true);

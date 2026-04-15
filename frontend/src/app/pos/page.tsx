@@ -54,7 +54,7 @@ function getPaymentLabel(method: PaymentMethod) {
 
 export default function PosPage() {
   const router = useRouter();
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
+  const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
   const [inventories, setInventories] = useState<Inventory[]>([]);
   const [inventoryId, setInventoryId] = useState<string>("");

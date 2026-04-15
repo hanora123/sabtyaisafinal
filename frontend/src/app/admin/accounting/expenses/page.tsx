@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 
 export default function ExpensesPage() {
   const router = useRouter();
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
+  const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
   const [desc, setDesc] = useState("");
   const [amount, setAmount] = useState(0);

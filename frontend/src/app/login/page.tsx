@@ -21,7 +21,7 @@ export default function LoginPage() {
         return;
       }
 
-      const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
+      const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
       const resp = await fetch(`${apiBase}/v1/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },

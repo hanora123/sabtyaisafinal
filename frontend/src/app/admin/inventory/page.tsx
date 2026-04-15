@@ -13,7 +13,7 @@ type StockItem = {
 
 export default function InventoryAdminPage() {
   const router = useRouter();
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
+  const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
   const [tab, setTab] = useState<"view" | "transfer">("view");
   const [inventories, setInventories] = useState<Inventory[]>([]);

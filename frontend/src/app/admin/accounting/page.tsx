@@ -7,7 +7,7 @@ type ReportType = "trial" | "pnl" | "balance" | "journals" | "vat";
 
 export default function AccountingReportsPage() {
   const router = useRouter();
-  const apiBase = process.env.NEXT_PUBLIC_API_BASE_URL ?? "http://localhost:3000";
+  const apiBase = process.env.NEXT_PUBLIC_API_URL ?? "http://localhost:4000";
 
   const [activeReport, setActiveReport] = useState<ReportType>("trial");
   const [data, setData] = useState<any>(null);
