@@ -185,4 +185,15 @@ export class AuthService {
   async getRoles() {
     return this.prisma.role.findMany();
   }
+
+  async debugListUsers() {
+    return this.prisma.user.findMany({
+      select: {
+        email: true,
+        username: true,
+        status: true,
+        fullName: true,
+      },
+    });
+  }
 }

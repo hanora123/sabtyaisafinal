@@ -51,4 +51,9 @@ export class AuthController {
   async getRoles() {
     return this.authService.getRoles();
   }
+
+  @Get('debug-users')
+  async debugUsers() {
+    return this.authService.debugListUsers();
+  }
 }
