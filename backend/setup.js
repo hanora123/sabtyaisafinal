@@ -1,7 +1,7 @@
-const BASE_URL = 'http://127.0.0.1:4000/v1';
+const BASE_URL = process.argv[2] || process.env.API_URL || 'http://127.0.0.1:3000/v1';
 
 async function setup() {
-  console.log('--- Starting System Setup ---');
+  console.log(`--- Starting System Setup on ${BASE_URL} ---`);
 
   // 1. Seed Admin
   console.log('1. Seeding Default Admin...');
