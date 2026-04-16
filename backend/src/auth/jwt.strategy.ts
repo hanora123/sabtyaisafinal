@@ -9,6 +9,7 @@ import type { AuthUser } from './auth-user.type';
 type JwtPayload = {
   sub: string;
   email: string;
+  fullName: string;
   roles: AuthUser['roles'];
 };
 
@@ -27,6 +28,11 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
 
   async validate(payload: JwtPayload): Promise<AuthUser> {
     if (!payload?.sub) throw new UnauthorizedException('توكن غير صالح');
-    return { id: payload.sub, email: payload.email, roles: payload.roles };
+    return {
+      id: payload.sub,
+      email: payload.email,
+      fullName: payload.fullName,
+      roles: payload.roles,
+    };
   }
 }

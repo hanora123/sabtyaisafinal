@@ -90,7 +90,7 @@ export class AuthService {
     const roles = (user.userRoles?.map((ur) => ur.role.name) ??
       []) as AppRole[];
 
-    const payload = { sub: user.id, email: user.email, roles };
+    const payload = { sub: user.id, email: user.email, fullName: user.fullName, roles };
     const token = this.jwtService.sign(payload);
     this.setAccessCookie(res, token);
 
