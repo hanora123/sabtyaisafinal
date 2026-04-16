@@ -27,6 +27,7 @@ export class AuthController {
     return this.authService.login(dto.email, dto.password, req, res);
   }
 
+  @UseGuards(JwtAuthGuard)
   @Post('logout')
   async logout(@Req() req: Request, @Res({ passthrough: true }) res: Response) {
     await this.authService.logout(req, res);
@@ -43,5 +44,11 @@ export class AuthController {
   async seedDefaultAdmin(@Body() dto: SeedAdminDto, @Req() req: Request) {
     await this.authService.seedDefaultAdmin(dto, req);
     return { ok: true };
+  }
+
+  @UseGuards(JwtAuthGuard)
+  @Get('roles')
+  async getRoles() {
+    return this.authService.getRoles();
   }
 }

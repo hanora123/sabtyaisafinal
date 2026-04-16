@@ -3,7 +3,7 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import { useRouter, usePathname } from "next/navigation";
 
-type User = { id: string; email: string; role: string; fullName: string };
+type User = { id: string; email: string; roles: string[]; fullName: string };
 type AuthContextType = {
   user: User | null;
   isLoading: boolean;
@@ -40,7 +40,9 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     checkAuth();
   }, [pathname]);
 
-  const login = (u: User) => setUser(u);
+  const login = (u: User) => {
+    setUser(u);
+  };
   const logout = async () => {
     await fetch(`${apiBase}/v1/auth/logout`, { method: "POST", credentials: "include" });
     setUser(null);

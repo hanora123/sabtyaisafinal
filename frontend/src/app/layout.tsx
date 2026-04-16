@@ -48,7 +48,7 @@ function AppHeader() {
           <div style={{ display: "flex", alignItems: "center", gap: 12, borderRight: "1px solid var(--border)", paddingRight: 12, marginRight: 12 }}>
             <div style={{ fontSize: 13, display: "flex", flexDirection: "column", alignItems: "flex-end" }}>
               <span style={{ fontWeight: 800 }}>{user.fullName}</span>
-              <span style={{ fontSize: 11, color: "var(--brand-blue)" }}>{user.role}</span>
+              <span style={{ fontSize: 11, color: "var(--brand-blue)" }}>{user.roles.join(", ")}</span>
             </div>
             
             <div style={{ position: "relative" }}>

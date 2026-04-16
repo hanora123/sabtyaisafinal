@@ -106,7 +106,7 @@ export class AuthService {
       },
     });
 
-    return { user: { id: user.id, email: user.email, roles } };
+    return { user: { id: user.id, email: user.email, fullName: user.fullName, roles } };
   }
 
   async logout(req: Request, res: Response): Promise<void> {
@@ -180,5 +180,9 @@ export class AuthService {
         userAgent: req.headers['user-agent'],
       },
     });
+  }
+
+  async getRoles() {
+    return this.prisma.role.findMany();
   }
 }

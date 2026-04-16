@@ -2,9 +2,11 @@
 
 import { useState, type FormEvent } from "react";
 import { useRouter } from "next/navigation";
+import { useAuth } from "../auth-context";
 
 export default function LoginPage() {
   const router = useRouter();
+  const { login } = useAuth();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -35,7 +37,17 @@ export default function LoginPage() {
         return;
       }
 
-      router.push("/pos");
+      const data = await resp.json();
+      login(data.user);
+
+      // Role-based redirection
+      if (data.user.roles.includes("Admin")) {
+        router.push("/admin");
+      } else if (data.user.roles.includes("Cashier")) {
+        router.push("/pos");
+      } else {
+        router.push("/");
+      }
     } catch {
       setError("تعذر الاتصال بالخادم. حاول مرة أخرى.");
     } finally {
